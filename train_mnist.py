@@ -21,10 +21,11 @@ def pool_max_2x2(x):
 	pooling = tf.nn.max_pool(x, ksize=[1,2,2,1], strides=[1,2,2,1], padding='SAME')
 	return pooling
 
-#here is the main
+#here is the main function
 if __name__ == '__main__':
 	#have the data
 	mnist = input_data.read_data_sets("MNIST_data/", one_hot=True)  
+	
 	#have the placeholder
 	x = tf.placeholder(tf.float32, [None, 784])
 	y_ = tf.placeholder(tf.float32, [None, 10])
@@ -75,7 +76,7 @@ if __name__ == '__main__':
 
 
 	#train 2000
-	for i in range(400):
+	for i in range(2000):
 		#have the batch
 		batch = mnist.train.next_batch(50)
 		#each 100 step print the accuracy
@@ -83,8 +84,7 @@ if __name__ == '__main__':
                 #check it each 100 steps
 		if i%100 == 0:
 			test_accuracy = accuracy.eval(feed_dict={x: batch[0], y_: batch[1], keep_prob: 1.0})
-			print('%d, %g'%(i,test_accuracy))
+			print('step:%d,accuracy: %g'%(i,test_accuracy))
 
-		#sess.run(accuracy, feed_dict={x: batch[0], y_: batch[1], keep_prob: 0.5})
 
 	print('the accuracy %g'%accuracy.eval(feed_dict={x: mnist.test.images, y_: mnist.test.labels, keep_prob: 1.0}))
