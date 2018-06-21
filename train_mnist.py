@@ -1,10 +1,10 @@
 #coding:utf-8
-#import the packages
+#import the tensorflow
 import tensorflow as tf
 from tensorflow.examples.tutorials.mnist import input_data
 
 
-#define the function of W,b,ccd tesonv2d,pool
+#define the functions of W,b,conv2d,pool
 def weight_variable(shape):
 	weight = tf.truncated_normal(shape, stddev=0.1)
 	return tf.Variable(weight)
@@ -21,7 +21,7 @@ def pool_max_2x2(x):
 	pooling = tf.nn.max_pool(x, ksize=[1,2,2,1], strides=[1,2,2,1], padding='SAME')
 	return pooling
 
-#this is the main
+#here is the main
 if __name__ == '__main__':
 	#have the data
 	mnist = input_data.read_data_sets("MNIST_data/", one_hot=True)  
@@ -80,7 +80,7 @@ if __name__ == '__main__':
 		batch = mnist.train.next_batch(50)
 		#each 100 step print the accuracy
 		train_accuracy = sess.run(train_step, feed_dict={x: batch[0], y_: batch[1], keep_prob: 0.5})
-
+                #check it each 100 steps
 		if i%100 == 0:
 			test_accuracy = accuracy.eval(feed_dict={x: batch[0], y_: batch[1], keep_prob: 1.0})
 			print('%d, %g'%(i,test_accuracy))
